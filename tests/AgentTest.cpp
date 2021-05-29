@@ -71,6 +71,14 @@ TEST_F(AgentTest, HandleErrors)
     ASSERT_TRUE(this->agent.handleError(debug, "HTTP ERROR", error));
 }
 
+// Test retrieving job
+TEST_F(AgentTest, GettingJob)
+{
+    // Create the debug class
+    Debug debug(true, agent.getAgentVersion());
+    ASSERT_TRUE(this->agent.getJob(debug, 1, 1));
+}
+
 TEST_F(AgentTest, RefreshAgentCredentials)
 {
     const string newClientId = "NEW_CLIENT_ID";

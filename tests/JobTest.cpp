@@ -92,6 +92,23 @@ TEST_F(JobTest, FailProcessFailCleanUpProcessTest)
     ASSERT_NE(jobObj.jobOutput.find("\"error_message\":\"notAValidCommand\""), std::string::npos);
 }
 
+TEST_F(JobTest, ReportResults)
+{
+    // Create the command struct
+    command_t job;
+    job.id = "1";
+    job.targetExecutionTime = time(NULL);
+    job.commands.emplace_back("ls");
+
+    // Construct the debug library for output
+    Debug debug(true, agent.getAgentVersion());
+
+    // Start the job process
+    Job jobObj(debug, job, agent.getBakupJobConfirmationURL(), agent.getAuthToken(), false);
+    jobObj.process(false);
+    ASSERT_EQ(jobObj.reportResults(1, 1), true);
+}
+
 TEST_F(JobTest, HandleErrors)
 {
     // Create the command struct
