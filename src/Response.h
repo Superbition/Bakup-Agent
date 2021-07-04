@@ -8,6 +8,7 @@
 #include <rapidjson/document.h>
 #include <rapidjson/writer.h>
 #include <rapidjson/stringbuffer.h>
+#include <RCloneVersionChecker.h>
 
 using namespace std;
 using namespace rapidjson;

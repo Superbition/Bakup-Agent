@@ -10,6 +10,7 @@
 #include <rapidjson/stringbuffer.h>
 #include <Debug.h>
 #include <ResponseBuilder.h>
+#include <RCloneVersionChecker.h>
 
 using namespace std;
 using namespace rapidjson;

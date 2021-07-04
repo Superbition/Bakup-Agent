@@ -48,6 +48,9 @@ class Command
         // Store executable to run for bash shell, only for testing
         string shell = "/bin/bash";
 
+        // Store the user ID
+        string userID;
+
     public:
         // Constructor
         Command(Debug &debug, string shell = "/bin/bash");

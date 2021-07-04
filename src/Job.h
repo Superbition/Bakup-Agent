@@ -40,6 +40,9 @@ class Job
         // Hold the version of the agent
         string agentVersion;
 
+        // Store the user's ID
+        string userID;
+
 #ifdef TESTING
         // Friend class for testing FailProcessFailCleanUpProcessTest
         FRIEND_TEST(JobTest, FailProcessFailCleanUpProcessTest);
@@ -50,7 +53,7 @@ class Job
             string jobOutput;
 public:
         // Constructor that must be given a reference to debug object and the job to be done
-        Job(Debug &debug, command_t &job, string baseUrl, string clientId, string apiToken, string agentVersion, bool autoExecute = true);
+        Job(Debug &debug, command_t &job, string baseUrl, string clientId, string apiToken, string agentVersion, string userID, bool autoExecute = true);
 
         // Process the commands in the job
         int process(bool autoReportResults = true, string shell = "/bin/bash");

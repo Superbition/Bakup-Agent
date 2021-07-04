@@ -74,7 +74,8 @@ string Agent::getUserID()
     return this->userID;
 }
 
-string Agent::getAgentVersion() {
+string Agent::getAgentVersion()
+{
     return this->agentVersion;
 }
 
@@ -242,7 +243,7 @@ bool Agent::processJobs(Debug &debug)
     // If the received job is a agent credential change, run synchronously
     if(this->jobs[0].refreshAgentCredentials)
     {
-        Job newJob(debug, this->jobs[0], this->getBaseURL(), this->getClientId(), this->getApiToken(), this->getAgentVersion());
+        Job newJob(debug, this->jobs[0], this->getBaseURL(), this->getClientId(), this->getApiToken(), this->getAgentVersion(), this->getUserID());
         this->refreshAgentCredentials(debug);
         this->skipNextPollTime = true;
     }
@@ -262,11 +263,11 @@ bool Agent::processJobs(Debug &debug)
             }
 
             // Create a new thread with the job class constructor, passing in the job
-            thread newJob([](Debug &debug, command_t &&job, string &&jobConfirmationURL, string &&clientId, string &&apiToken, string &&agentVersion)
+            thread newJob([](Debug &debug, command_t &&job, string &&jobConfirmationURL, string &&clientId, string &&apiToken, string &&agentVersion, string &&userID)
                           {
-                              Job newJob(debug, job, jobConfirmationURL, clientId, apiToken, agentVersion);
+                              Job newJob(debug, job, jobConfirmationURL, clientId, apiToken, agentVersion, userID);
                           },
-                          ref(debug), job, this->getBaseURL(), this->getClientId(), this->getApiToken(), this->getAgentVersion());
+                          ref(debug), job, this->getBaseURL(), this->getClientId(), this->getApiToken(), this->getAgentVersion(), this->getUserID());
 
             // Detach from the thread so that the main thread can continue running
             newJob.detach();

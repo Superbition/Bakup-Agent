@@ -154,7 +154,8 @@ cpr::Header Request::getDefaultHeaders(const map<string, string> &extraHeaders)
     cpr::Header defaultHeaders = {
             {"ClientID", this->clientId},
             {"Authorization", "Bearer " + this->apiToken},
-            {"bakup-agent-version", this->agentVersion}
+            {"bakup-agent-version", this->agentVersion},
+            {"bakup-rclone-version", RCloneVersionChecker::getRCloneVersion()}
     };
 
     for(auto const &[key, value] : extraHeaders)

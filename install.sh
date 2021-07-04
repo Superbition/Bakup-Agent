@@ -136,6 +136,9 @@ then
   exit 4
 fi
 
+# Set permissions of the /opt/bakupagent directory
+chown -R $USER_NAME:root /opt/bakupagent
+
 # Start the service
 echo "Starting Bakup service..."
 systemctl enable bakupagent

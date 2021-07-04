@@ -1,12 +1,13 @@
 #include "Job.h"
 
-Job::Job(Debug &debug, command_t &job, string baseUrl, string clientId, string apiToken, string agentVersion, bool autoExecute) :
+Job::Job(Debug &debug, command_t &job, string baseUrl, string clientId, string apiToken, string agentVersion, string userID, bool autoExecute) :
         debug(ref(debug)),
         job(std::move(job)),
         baseURL(std::move(baseUrl)),
         clientId(std::move(clientId)),
         apiToken(std::move(apiToken)),
-        agentVersion(std::move(agentVersion))
+        agentVersion(std::move(agentVersion)),
+        userID(std::move(userID))
 {
     if(autoExecute)
     {
@@ -56,6 +57,10 @@ int Job::process(bool autoReportResults, string shell)
 
         return exitStatus;
     }
+
+    // Inject runuser commands
+    string comm = "runuser --login $(cat /etc/passwd | grep 1000 | cut -d: -f1)";
+    command.runCommand(comm);
 
     // Check the job vector isn't empty
     if(!empty(this->job.commands))
@@ -204,6 +209,8 @@ int Job::process(bool autoReportResults, string shell)
 
         // Build the response and get the string
         this->jobOutput = responseBuilder.build();
+
+        debug.info(this->jobOutput);
 
         // If the autoReportResults is set
         if(autoReportResults)

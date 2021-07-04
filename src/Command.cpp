@@ -60,7 +60,7 @@ bool Command::setupEnvironment(string bashTestCommand)
         close(this->inPipeFD[1]); // not needed anymore
 
         // Start a bash shell and echo success message
-        execl(this->shell.c_str(), "bash", nullptr);
+        execl(this->shell.c_str(), nullptr);
 
         // Make child kill itself if execl fails
         kill(getpid(), SIGTERM);
